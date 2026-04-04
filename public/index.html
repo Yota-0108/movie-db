@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <title>Movie DB</title>
+  <style>
+    body { font-family: sans-serif; max-width: 900px; margin: 40px auto; padding: 0 20px; }
+    h1 { font-size: 1.4rem; }
+    form { display: flex; flex-wrap: wrap; gap: 10px; margin-bottom: 30px; }
+    input, select { padding: 6px 10px; font-size: 0.9rem; }
+    button { padding: 6px 16px; cursor: pointer; }
+    table { width: 100%; border-collapse: collapse; font-size: 0.9rem; }
+    th, td { border: 1px solid #ccc; padding: 8px 12px; text-align: left; }
+    th { background: #f5f5f5; }
+    .null { color: #aaa; }
+
+    /* モーダル */
+    #editModal {
+      display: none;
+      position: fixed;
+      inset: 0;
+      background: rgba(0,0,0,0.4);
+      justify-content: center;
+      align-items: center;
+    }
+    #editModalInner {
+      background: #fff;
+      padding: 30px;
+      border-radius: 8px;
+      min-width: 300px;
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+    }
+    #editModalInner h3 { margin: 0; font-size: 1rem; }
+    #editModalInner label { font-size: 0.85rem; display: flex; flex-direction: column; gap: 4px; }
+    #editModalInner input, #editModalInner select { padding: 6px 10px; font-size: 0.9rem; }
+    .modalButtons { display: flex; gap: 10px; }
+  </style>
+</head>
+<body>
+  <h1>Movie DB</h1>
+
+  <h2>作品登録</h2>
+  <form id="registerForm">
+    <input type="text" id="title" placeholder="作品名" required>
+    <input type="date" id="release_date" required>
+    <input type="number" id="theater_count" placeholder="上映館数">
+    <select id="has_bonus">
+      <option value="">特典なし</option>
+      <option value="true">特典あり</option>
+    </select>
+    <input type="number" id="bonus_count" placeholder="特典の弾数">
+    <button type="submit">登録</button>
+  </form>
+
+  <h2>作品一覧</h2>
+  <table id="movieTable">
+    <thead>
+      <tr>
+        <th>作品名</th>
+        <th>公開日</th>
+        <th>上映館数</th>
+        <th>予告再生数（公開当日）</th>
+        <th>入場者特典</th>
+        <th>特典弾数</th>
+        <th></th>
+      </tr>
+    </thead>
+    <tbody id="movieList"></tbody>
+  </table>
+
+  <!-- 編集モーダル -->
+  <div id="editModal">
+    <div id="editModalInner">
+      <h3 id="editTitle"></h3>
+      <input type="hidden" id="editId">
+      <form id="editForm">
+        <label>上映館数
+          <input type="number" id="editTheaterCount" placeholder="未入力">
+        </label>
+        <label>入場者特典
+          <select id="editHasBonus">
+            <option value="">なし</option>
+            <option value="true">あり</option>
+          </select>
+        </label>
+        <label>特典弾数
+          <input type="number" id="editBonusCount" placeholder="未入力">
+        </label>
+        <div class="modalButtons">
+          <button type="submit">保存</button>
+          <button type="button" id="cancelEdit">キャンセル</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <script src="app.js"></script>
+</body>
+</html>
