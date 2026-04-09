@@ -49,10 +49,8 @@ function renderMovies() {
   });
 }
 
-async function openEditModal(id) {
-  const res = await fetch('/api/movies');
-  const movies = await res.json();
-  const movie = movies.find(m => m.id === id);
+function openEditModal(id) {
+  const movie = allMovies.find(m => m.id === id);
   if (!movie) return;
 
   document.getElementById('editId').value = movie.id;
