@@ -103,6 +103,7 @@ async function loadMovies() {
 }
 
 document.getElementById('distributorFilter').addEventListener('change', renderMovies);
+document.getElementById('reloadBtn').addEventListener('click', loadMovies);
 
 document.querySelectorAll('th.sortable').forEach(th => {
   th.addEventListener('click', () => {
