@@ -102,7 +102,7 @@ cron.schedule('0 9 * * 5', () => {
 
 // 作品登録
 app.post('/api/movies', async (req, res) => {
-  const { title, release_date, theater_count, has_bonus, bonus_count } = req.body;
+  const { title, release_date, theater_count, has_bonus, bonus_count, distributor, memo } = req.body;
 
   if (!title || !release_date) {
     return res.status(400).json({ error: 'タイトルと公開日は必須です' });
@@ -110,7 +110,7 @@ app.post('/api/movies', async (req, res) => {
 
   const { data, error } = await supabase
     .from('movies')
-    .insert([{ title, release_date, theater_count, has_bonus, bonus_count }])
+    .insert([{ title, release_date, theater_count, has_bonus, bonus_count, distributor, memo }])
     .select();
 
   if (error) return res.status(500).json({ error: error.message });

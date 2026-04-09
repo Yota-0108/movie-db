@@ -14,6 +14,8 @@ async function loadMovies() {
       <td>${m.youtube_views_release != null ? m.youtube_views_release.toLocaleString() : '<span class="null">取得待ち</span>'}</td>
       <td class="editable" data-field="has_bonus">${m.has_bonus ? 'あり' : 'なし'}</td>
       <td class="editable" data-field="bonus_count">${m.bonus_count ?? '<span class="null">-</span>'}</td>
+      <td>${m.distributor ?? '<span class="null">-</span>'}</td>
+      <td>${m.memo ?? '<span class="null">-</span>'}</td>
       <td><button class="editBtn">編集</button></td>
     `;
     tbody.appendChild(tr);
@@ -37,6 +39,8 @@ async function openEditModal(id) {
   document.getElementById('editTheaterCount').value = movie.theater_count ?? '';
   document.getElementById('editHasBonus').value = movie.has_bonus ? 'true' : '';
   document.getElementById('editBonusCount').value = movie.bonus_count ?? '';
+  document.getElementById('editDistributor').value = movie.distributor ?? '';
+  document.getElementById('editMemo').value = movie.memo ?? '';
   document.getElementById('editTitle').textContent = movie.title;
   document.getElementById('editModal').style.display = 'flex';
 }
@@ -48,6 +52,8 @@ document.getElementById('editForm').addEventListener('submit', async (e) => {
     theater_count: document.getElementById('editTheaterCount').value || null,
     has_bonus: document.getElementById('editHasBonus').value === 'true',
     bonus_count: document.getElementById('editBonusCount').value || null,
+    distributor: document.getElementById('editDistributor').value || null,
+    memo: document.getElementById('editMemo').value || null,
   };
 
   const res = await fetch(`/api/movies/${id}`, {
@@ -77,6 +83,8 @@ document.getElementById('registerForm').addEventListener('submit', async (e) => 
     theater_count: document.getElementById('theater_count').value || null,
     has_bonus: document.getElementById('has_bonus').value === 'true',
     bonus_count: document.getElementById('bonus_count').value || null,
+    distributor: document.getElementById('distributor').value || null,
+    memo: document.getElementById('memo').value || null,
   };
 
   const res = await fetch('/api/movies', {
