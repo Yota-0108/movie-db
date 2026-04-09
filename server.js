@@ -19,6 +19,7 @@ const OFFICIAL_CHANNELS = [
   'UC6AKivyBX3HpOgnx7OCQF0w', // ユニバーサルピクチャーズ
   'UCACof5s6TeCFiIZYRVgJS1A', // 東宝東和
   'UCkH3CcMfqww9RsZvPRPkAJA', // 任天堂
+  'UCP8I83WIYaVrczhJndYErAg', // ナカチカピクチャーズ
 ];
 
 // YouTube予告動画を検索して再生数を取得
