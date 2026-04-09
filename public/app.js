@@ -1,9 +1,29 @@
-async function loadMovies() {
-  const res = await fetch('/api/movies');
-  const movies = await res.json();
+let allMovies = [];
+let sortField = 'release_date';
+let sortDir = 'desc';
+
+function updateDistributorFilter() {
+  const select = document.getElementById('distributorFilter');
+  const current = select.value;
+  const distributors = [...new Set(allMovies.map(m => m.distributor).filter(Boolean))].sort();
+  select.innerHTML = '<option value="">すべて</option>' +
+    distributors.map(d => `<option value="${d}"${d === current ? ' selected' : ''}>${d}</option>`).join('');
+}
+
+function renderMovies() {
+  const filterVal = document.getElementById('distributorFilter').value;
+  let movies = filterVal ? allMovies.filter(m => m.distributor === filterVal) : [...allMovies];
+
+  movies.sort((a, b) => {
+    let va = a[sortField] ?? '';
+    let vb = b[sortField] ?? '';
+    if (va < vb) return sortDir === 'asc' ? -1 : 1;
+    if (va > vb) return sortDir === 'asc' ? 1 : -1;
+    return 0;
+  });
+
   const tbody = document.getElementById('movieList');
   tbody.innerHTML = '';
-
   movies.forEach(m => {
     const tr = document.createElement('tr');
     tr.dataset.id = m.id;
@@ -73,6 +93,32 @@ document.getElementById('editForm').addEventListener('submit', async (e) => {
 
 document.getElementById('cancelEdit').addEventListener('click', () => {
   document.getElementById('editModal').style.display = 'none';
+});
+
+async function loadMovies() {
+  const res = await fetch('/api/movies');
+  allMovies = await res.json();
+  updateDistributorFilter();
+  renderMovies();
+}
+
+document.getElementById('distributorFilter').addEventListener('change', renderMovies);
+
+document.querySelectorAll('th.sortable').forEach(th => {
+  th.addEventListener('click', () => {
+    const field = th.dataset.field;
+    if (sortField === field) {
+      sortDir = sortDir === 'asc' ? 'desc' : 'asc';
+    } else {
+      sortField = field;
+      sortDir = 'asc';
+    }
+    document.querySelectorAll('th.sortable').forEach(t => {
+      t.classList.remove('sort-asc', 'sort-desc');
+    });
+    th.classList.add(sortDir === 'asc' ? 'sort-asc' : 'sort-desc');
+    renderMovies();
+  });
 });
 
 document.getElementById('registerForm').addEventListener('submit', async (e) => {
