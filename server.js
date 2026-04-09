@@ -17,6 +17,8 @@ const OFFICIAL_CHANNELS = [
   'UCfhG9PjoBPGgSCBqHsQjlLQ', // 松竹
   'UCt5TqISGfcIUGFHDHkJKtOg', // ウォルトディズニー
   'UC6AKivyBX3HpOgnx7OCQF0w', // ユニバーサルピクチャーズ
+  'UCACof5s6TeCFiIZYRVgJS1A', // 東宝東和
+  'UCkH3CcMfqww9RsZvPRPkAJA', // 任天堂
 ];
 
 // YouTube予告動画を検索して再生数を取得
