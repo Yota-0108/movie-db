@@ -10,57 +10,59 @@ app.use(express.static('public'));
 
 const supabase = createClient(process.env.SUPABASE_URL, process.env.SUPABASE_KEY);
 
-// 公式配給会社のYouTubeチャンネルID
-const OFFICIAL_CHANNELS = [
-  'UCdel3JEXDMbFMkMCBbsHBBg', // 東宝
-  'UC8HNiIBFuADMWAoNGdgJMvg', // 東映
-  'UCfhG9PjoBPGgSCBqHsQjlLQ', // 松竹
-  'UCt5TqISGfcIUGFHDHkJKtOg', // ウォルトディズニー
-  'UC6AKivyBX3HpOgnx7OCQF0w', // ユニバーサルピクチャーズ
-  'UCACof5s6TeCFiIZYRVgJS1A', // 東宝東和
-  'UCkH3CcMfqww9RsZvPRPkAJA', // 任天堂
-  'UCP8I83WIYaVrczhJndYErAg', // ナカチカピクチャーズ
-];
+// 配給会社名 → YouTubeチャンネルID
+const DISTRIBUTOR_CHANNEL_MAP = {
+  '東宝':               'UCdel3JEXDMbFMkMCBbsHBBg',
+  '東映':               'UC8HNiIBFuADMWAoNGdgJMvg',
+  '松竹':               'UCfhG9PjoBPGgSCBqHsQjlLQ',
+  'ウォルトディズニー':  'UCt5TqISGfcIUGFHDHkJKtOg',
+  'ユニバーサルピクチャーズ': 'UC6AKivyBX3HpOgnx7OCQF0w',
+  '東宝東和':           'UCACof5s6TeCFiIZYRVgJS1A',
+  '任天堂':             'UCkH3CcMfqww9RsZvPRPkAJA',
+  'ナカチカピクチャーズ': 'UCP8I83WIYaVrczhJndYErAg',
+};
 
 // YouTube予告動画を検索して再生数を取得
-async function getTrailerViews(movieTitle) {
+async function getTrailerViews(movieTitle, distributor) {
   try {
-    for (const channelId of OFFICIAL_CHANNELS) {
-      const searchRes = await axios.get('https://www.googleapis.com/youtube/v3/search', {
-        params: {
-          part: 'snippet',
-          q: `${movieTitle} 予告`,
-          type: 'video',
-          channelId,
-          order: 'relevance',
-          maxResults: 1,
-          key: process.env.YOUTUBE_API_KEY,
-        },
-      });
-
-      const item = searchRes.data.items?.[0];
-      if (!item) continue;
-
-      const videoId = item.id.videoId;
-
-      // 再生数取得
-      const statsRes = await axios.get('https://www.googleapis.com/youtube/v3/videos', {
-        params: {
-          part: 'statistics',
-          id: videoId,
-          key: process.env.YOUTUBE_API_KEY,
-        },
-      });
-
-      const stats = statsRes.data.items[0]?.statistics;
-      return {
-        videoId,
-        viewCount: parseInt(stats?.viewCount || 0),
-        title: item.snippet.title,
-      };
+    const channelId = DISTRIBUTOR_CHANNEL_MAP[distributor];
+    if (!channelId) {
+      console.warn(`Unknown distributor: "${distributor}"`);
+      return null;
     }
 
-    return null;
+    const searchRes = await axios.get('https://www.googleapis.com/youtube/v3/search', {
+      params: {
+        part: 'snippet',
+        q: `${movieTitle} 予告`,
+        type: 'video',
+        channelId,
+        order: 'relevance',
+        maxResults: 1,
+        key: process.env.YOUTUBE_API_KEY,
+      },
+    });
+
+    const item = searchRes.data.items?.[0];
+    if (!item) return null;
+
+    const videoId = item.id.videoId;
+
+    // 再生数取得
+    const statsRes = await axios.get('https://www.googleapis.com/youtube/v3/videos', {
+      params: {
+        part: 'statistics',
+        id: videoId,
+        key: process.env.YOUTUBE_API_KEY,
+      },
+    });
+
+    const stats = statsRes.data.items[0]?.statistics;
+    return {
+      videoId,
+      viewCount: parseInt(stats?.viewCount || 0),
+      title: item.snippet.title,
+    };
   } catch (err) {
     console.error('YouTube API error:', err.message);
     return null;
@@ -79,7 +81,7 @@ async function fetchViewsForTodaysMovies() {
   if (error || !movies?.length) return;
 
   for (const movie of movies) {
-    const result = await getTrailerViews(movie.title);
+    const result = await getTrailerViews(movie.title, movie.distributor);
     if (!result) continue;
 
     await supabase
