@@ -147,4 +147,13 @@ document.getElementById('registerForm').addEventListener('submit', async (e) => 
   }
 });
 
+async function loadDistributors() {
+  const res = await fetch('/api/distributors');
+  const distributors = await res.json();
+  const options = distributors.map(d => `<option value="${d}">${d}</option>`).join('');
+  document.getElementById('distributor').innerHTML += options;
+  document.getElementById('editDistributor').innerHTML += options;
+}
+
+loadDistributors();
 loadMovies();

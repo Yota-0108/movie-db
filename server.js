@@ -97,7 +97,7 @@ async function fetchViewsForTodaysMovies() {
 }
 
 // 毎週金曜 9:00 に公開当日の再生数を取得
-cron.schedule('10 11 * * 5', () => {
+cron.schedule('30 11 * * 5', () => {
   console.log('Running Friday cron: fetching release day views...');
   fetchViewsForTodaysMovies();
 });
@@ -117,6 +117,11 @@ app.post('/api/movies', async (req, res) => {
 
   if (error) return res.status(500).json({ error: error.message });
   res.json(data[0]);
+});
+
+// 配給会社一覧取得
+app.get('/api/distributors', (req, res) => {
+  res.json(Object.keys(DISTRIBUTOR_CHANNEL_MAP));
 });
 
 // 作品一覧取得

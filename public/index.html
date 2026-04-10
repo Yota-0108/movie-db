@@ -56,7 +56,9 @@
       <option value="true">特典あり</option>
     </select>
     <input type="number" id="bonus_count" placeholder="特典の弾数">
-    <input type="text" id="distributor" placeholder="配給会社">
+    <select id="distributor">
+      <option value="">配給会社を選択</option>
+    </select>
     <input type="text" id="memo" placeholder="メモ">
     <button type="submit">登録</button>
   </form>
@@ -105,7 +107,9 @@
           <input type="number" id="editBonusCount" placeholder="未入力">
         </label>
         <label>配給会社
-          <input type="text" id="editDistributor" placeholder="未入力">
+          <select id="editDistributor">
+            <option value="">未選択</option>
+          </select>
         </label>
         <label>メモ
           <input type="text" id="editMemo" placeholder="未入力">
