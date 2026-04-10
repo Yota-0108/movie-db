@@ -25,45 +25,42 @@ const OFFICIAL_CHANNELS = [
 // YouTube予告動画を検索して再生数を取得
 async function getTrailerViews(movieTitle) {
   try {
-    const channelQuery = OFFICIAL_CHANNELS.map(id => `channelId=${id}`).join('|');
-    const searchRes = await axios.get('https://www.googleapis.com/youtube/v3/search', {
-      params: {
-        part: 'snippet',
-        q: `${movieTitle} 予告`,
-        type: 'video',
-        channelId: OFFICIAL_CHANNELS.join(','),
-        order: 'relevance',
-        maxResults: 5,
-        key: process.env.YOUTUBE_API_KEY,
-      },
-    });
+    for (const channelId of OFFICIAL_CHANNELS) {
+      const searchRes = await axios.get('https://www.googleapis.com/youtube/v3/search', {
+        params: {
+          part: 'snippet',
+          q: `${movieTitle} 予告`,
+          type: 'video',
+          channelId,
+          order: 'relevance',
+          maxResults: 1,
+          key: process.env.YOUTUBE_API_KEY,
+        },
+      });
 
-    const items = searchRes.data.items;
-    if (!items || items.length === 0) return null;
+      const item = searchRes.data.items?.[0];
+      if (!item) continue;
 
-    // チャンネルIDが公式かどうか確認
-    const officialVideo = items.find(item =>
-      OFFICIAL_CHANNELS.includes(item.snippet.channelId)
-    );
-    if (!officialVideo) return null;
+      const videoId = item.id.videoId;
 
-    const videoId = officialVideo.id.videoId;
+      // 再生数取得
+      const statsRes = await axios.get('https://www.googleapis.com/youtube/v3/videos', {
+        params: {
+          part: 'statistics',
+          id: videoId,
+          key: process.env.YOUTUBE_API_KEY,
+        },
+      });
 
-    // 再生数取得
-    const statsRes = await axios.get('https://www.googleapis.com/youtube/v3/videos', {
-      params: {
-        part: 'statistics',
-        id: videoId,
-        key: process.env.YOUTUBE_API_KEY,
-      },
-    });
+      const stats = statsRes.data.items[0]?.statistics;
+      return {
+        videoId,
+        viewCount: parseInt(stats?.viewCount || 0),
+        title: item.snippet.title,
+      };
+    }
 
-    const stats = statsRes.data.items[0]?.statistics;
-    return {
-      videoId,
-      viewCount: parseInt(stats?.viewCount || 0),
-      title: officialVideo.snippet.title,
-    };
+    return null;
   } catch (err) {
     console.error('YouTube API error:', err.message);
     return null;
@@ -98,7 +95,7 @@ async function fetchViewsForTodaysMovies() {
 }
 
 // 毎週金曜 9:00 に公開当日の再生数を取得
-cron.schedule('0 9 * * 5', () => {
+cron.schedule('0 11 * * 5', () => {
   console.log('Running Friday cron: fetching release day views...');
   fetchViewsForTodaysMovies();
 });
