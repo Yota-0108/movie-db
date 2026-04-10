@@ -13,13 +13,26 @@ const supabase = createClient(process.env.SUPABASE_URL, process.env.SUPABASE_KEY
 // 配給会社名 → YouTubeチャンネルID
 const DISTRIBUTOR_CHANNEL_MAP = {
   '東宝':               'UCTDMT3aL30noTVFgNPA9XtQ',
-  '東映':               'UC8HNiIBFuADMWAoNGdgJMvg',
-  '松竹':               'UCfhG9PjoBPGgSCBqHsQjlLQ',
-  'ウォルトディズニー':  'UCt5TqISGfcIUGFHDHkJKtOg',
-  'ユニバーサルピクチャーズ': 'UC6AKivyBX3HpOgnx7OCQF0w',
-  '東宝東和':           'UCACof5s6TeCFiIZYRVgJS1A',
-  '任天堂':             'UCkH3CcMfqww9RsZvPRPkAJA',
+  '東映':               'UCKtn-oZON38D0v7bLopdqDA',
+  '松竹':               'UCulneJtjMARpEHhWQTlGa6w',
+  'KADOKAWA':           'UCHjj-qlJhYWDacFwnaewV6Q',
+  'KADOKAWA Anime':     'UCY5fcqgSrQItPAX_Z5Frmwg',
+  'avex':               'UCKlXiCjg_VI0eZ9kKBeNJgw',
+  'GAGA':               'UCaPosffCG5qIORTZUcx-IKg',
+  '東京テアトル':       'UCIfX73iNlxOuMBNU9o07wmQ',
+  'キノフィルムズ':     'UC9snK46BPugKo2hnr-syeKQ',
+  'ハピネットファントム': 'UCAzEmvg00LdRHOHVfOTjcHQ',
+  'Asmik Ace':          'UCBuAshczy8ouqLU_H381row',
+  'TWIN ENGINE':        'UC5S8dDswLqbnm9fuZ8Z2ntQ',
   'ナカチカピクチャーズ': 'UCP8I83WIYaVrczhJndYErAg',
+  'ディズニースタジオ':  'UCCC2KYMK8Xq3Qs6WheLJJmw',
+  '20世紀スタジオ':     'UCkvOiP-XrHCDvAoGPC3lZrA',
+  'スターウォーズ':     'UCGzKKabQ36Chhas5nermAGA',
+  'ユニバーサルピクチャーズ': 'UC9llDCAObCbGpsaa66fClKw',
+  'イルミネーションピクチャーズ': 'UCi0I8qQOvOO0OZlBYovFYdg',
+  'ソニーピクチャーズ':  'UCx-l79NDhpI8GDyl_A_C1Ew',
+  'パラマウントピクチャーズ': 'UCUTi1VedwlfXWEQa3EpN_0A',
+  'ワーナーブラザース':  'UCSrwpEM8lBM4jR5YoKX3XOQ',
 };
 
 // YouTube予告動画を検索して再生数を取得
