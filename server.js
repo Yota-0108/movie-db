@@ -12,7 +12,7 @@ const supabase = createClient(process.env.SUPABASE_URL, process.env.SUPABASE_KEY
 
 // 配給会社名 → YouTubeチャンネルID
 const DISTRIBUTOR_CHANNEL_MAP = {
-  '東宝':               'UCdel3JEXDMbFMkMCBbsHBBg',
+  '東宝':               'UCTDMT3aL30noTVFgNPA9XtQ',
   '東映':               'UC8HNiIBFuADMWAoNGdgJMvg',
   '松竹':               'UCfhG9PjoBPGgSCBqHsQjlLQ',
   'ウォルトディズニー':  'UCt5TqISGfcIUGFHDHkJKtOg',
@@ -97,7 +97,7 @@ async function fetchViewsForTodaysMovies() {
 }
 
 // 毎週金曜 9:00 に公開当日の再生数を取得
-cron.schedule('30 11 * * 5', () => {
+cron.schedule('40 11 * * 5', () => {
   console.log('Running Friday cron: fetching release day views...');
   fetchViewsForTodaysMovies();
 });
