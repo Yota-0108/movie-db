@@ -34,10 +34,10 @@ async function getTrailerViews(movieTitle, distributor) {
     const searchRes = await axios.get('https://www.googleapis.com/youtube/v3/search', {
       params: {
         part: 'snippet',
-        q: `${movieTitle} 予告`,
+        q: movieTitle,
         type: 'video',
         channelId,
-        order: 'relevance',
+        order: 'viewCount',
         maxResults: 1,
         key: process.env.YOUTUBE_API_KEY,
       },
