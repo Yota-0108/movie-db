@@ -51,7 +51,7 @@ async function getTrailerViews(movieTitle, distributor) {
         type: 'video',
         channelId,
         order: 'relevance',
-        maxResults: 10,
+        maxResults: 30,
         key: process.env.YOUTUBE_API_KEY,
       },
     });
