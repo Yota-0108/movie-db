@@ -50,31 +50,37 @@ async function getTrailerViews(movieTitle, distributor) {
         q: movieTitle,
         type: 'video',
         channelId,
-        order: 'viewCount',
-        maxResults: 1,
+        order: 'relevance',
+        maxResults: 10,
         key: process.env.YOUTUBE_API_KEY,
       },
     });
 
-    const item = searchRes.data.items?.[0];
-    if (!item) return null;
+    const matched = (searchRes.data.items || []).filter(item =>
+      item.snippet.title.includes(movieTitle)
+    );
+    if (!matched.length) return null;
 
-    const videoId = item.id.videoId;
-
-    // 再生数取得
+    // 絞り込んだ動画のstatisticsをまとめて取得
+    const ids = matched.map(item => item.id.videoId).join(',');
     const statsRes = await axios.get('https://www.googleapis.com/youtube/v3/videos', {
       params: {
         part: 'statistics',
-        id: videoId,
+        id: ids,
         key: process.env.YOUTUBE_API_KEY,
       },
     });
 
-    const stats = statsRes.data.items[0]?.statistics;
+    // 再生数が最も多いものを選ぶ
+    const best = statsRes.data.items.reduce((a, b) => {
+      return parseInt(a.statistics?.viewCount || 0) >= parseInt(b.statistics?.viewCount || 0) ? a : b;
+    });
+    const matchedSnippet = matched.find(item => item.id.videoId === best.id);
+
     return {
-      videoId,
-      viewCount: parseInt(stats?.viewCount || 0),
-      title: item.snippet.title,
+      videoId: best.id,
+      viewCount: parseInt(best.statistics?.viewCount || 0),
+      title: matchedSnippet?.snippet.title ?? '',
     };
   } catch (err) {
     console.error('YouTube API error:', err.message);
@@ -110,10 +116,10 @@ async function fetchViewsForTodaysMovies() {
 }
 
 // 毎週金曜 9:00 に公開当日の再生数を取得
-cron.schedule('0 0 * * 5', () => {
+cron.schedule('10 13 * * *', () => {
   console.log('Running Friday cron: fetching release day views...');
   fetchViewsForTodaysMovies();
-});
+}, { timezone: 'Asia/Tokyo' });
 
 // 作品登録
 app.post('/api/movies', async (req, res) => {
