@@ -47,11 +47,11 @@ async function getTrailerViews(movieTitle, distributor) {
     const searchRes = await axios.get('https://www.googleapis.com/youtube/v3/search', {
       params: {
         part: 'snippet',
-        q: `${movieTitle} 予告`,
+        q: movieTitle,
         type: 'video',
         channelId,
         order: 'relevance',
-        maxResults: 30,
+        maxResults: 50,
         key: process.env.YOUTUBE_API_KEY,
       },
     });
@@ -125,7 +125,7 @@ async function fetchViewsForTodaysMovies() {
 }
 
 // 毎週金曜 9:00 に公開当日の再生数を取得
-cron.schedule('20 14 * * *', () => {
+cron.schedule('30 14 * * *', () => {
   console.log('Running Friday cron: fetching release day views...');
   fetchViewsForTodaysMovies();
 }, { timezone: 'Asia/Tokyo' });
