@@ -57,7 +57,10 @@ async function getTrailerViews(movieTitle, distributor) {
     });
 
     const items = searchRes.data.items || [];
-    console.log('Search results:', items.map(item => item.snippet.title));
+    console.log('Search results:', items.map(item => ({
+      id: item.id.videoId,
+      title: item.snippet.title,
+    })));
     if (!items.length) return null;
 
     const matched = items.filter(item =>
