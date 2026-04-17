@@ -47,22 +47,20 @@ async function getTrailerViews(movieTitle, distributor) {
     const searchRes = await axios.get('https://www.googleapis.com/youtube/v3/search', {
       params: {
         part: 'snippet',
-        q: movieTitle,
+        q: `${movieTitle} 予告`,
         type: 'video',
         channelId,
-        order: 'relevance',
-        maxResults: 10,
+        order: 'viewCount',
+        maxResults: 5,
         key: process.env.YOUTUBE_API_KEY,
       },
     });
 
-    const matched = (searchRes.data.items || []).filter(item =>
-      item.snippet.title.includes(movieTitle)
-    );
-    if (!matched.length) return null;
+    const items = searchRes.data.items || [];
+    if (!items.length) return null;
 
-    // 絞り込んだ動画のstatisticsをまとめて取得
-    const ids = matched.map(item => item.id.videoId).join(',');
+    // 動画のstatisticsをまとめて取得
+    const ids = items.map(item => item.id.videoId).join(',');
     const statsRes = await axios.get('https://www.googleapis.com/youtube/v3/videos', {
       params: {
         part: 'statistics',
@@ -71,11 +69,13 @@ async function getTrailerViews(movieTitle, distributor) {
       },
     });
 
+    if (!statsRes.data.items?.length) return null;
+
     // 再生数が最も多いものを選ぶ
     const best = statsRes.data.items.reduce((a, b) => {
       return parseInt(a.statistics?.viewCount || 0) >= parseInt(b.statistics?.viewCount || 0) ? a : b;
     });
-    const matchedSnippet = matched.find(item => item.id.videoId === best.id);
+    const matchedSnippet = items.find(item => item.id.videoId === best.id);
 
     return {
       videoId: best.id,
@@ -116,7 +116,7 @@ async function fetchViewsForTodaysMovies() {
 }
 
 // 毎週金曜 9:00 に公開当日の再生数を取得
-cron.schedule('15 13 * * *', () => {
+cron.schedule('30 13 * * *', () => {
   console.log('Running Friday cron: fetching release day views...');
   fetchViewsForTodaysMovies();
 }, { timezone: 'Asia/Tokyo' });
