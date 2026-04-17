@@ -57,10 +57,7 @@ async function getTrailerViews(movieTitle, distributor) {
     });
 
     const items = searchRes.data.items || [];
-    console.log('Search results:', items.map(item => ({
-      id: item.id.videoId,
-      title: item.snippet.title,
-    })));
+
     if (!items.length) return null;
 
     const matched = items.filter(item =>
@@ -125,7 +122,7 @@ async function fetchViewsForTodaysMovies() {
 }
 
 // 毎週金曜 9:00 に公開当日の再生数を取得
-cron.schedule('30 14 * * *', () => {
+cron.schedule('0 9 * * 5', () => {
   console.log('Running Friday cron: fetching release day views...');
   fetchViewsForTodaysMovies();
 }, { timezone: 'Asia/Tokyo' });
