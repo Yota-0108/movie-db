@@ -59,8 +59,13 @@ async function getTrailerViews(movieTitle, distributor) {
     const items = searchRes.data.items || [];
     if (!items.length) return null;
 
-    // 動画のstatisticsをまとめて取得
-    const ids = items.map(item => item.id.videoId).join(',');
+    const matched = items.filter(item =>
+      item.snippet.title.includes(movieTitle)
+    );
+    if (!matched.length) return null;
+
+    // 絞り込んだ動画のstatisticsをまとめて取得
+    const ids = matched.map(item => item.id.videoId).join(',');
     const statsRes = await axios.get('https://www.googleapis.com/youtube/v3/videos', {
       params: {
         part: 'statistics',
@@ -75,7 +80,7 @@ async function getTrailerViews(movieTitle, distributor) {
     const best = statsRes.data.items.reduce((a, b) => {
       return parseInt(a.statistics?.viewCount || 0) >= parseInt(b.statistics?.viewCount || 0) ? a : b;
     });
-    const matchedSnippet = items.find(item => item.id.videoId === best.id);
+    const matchedSnippet = matched.find(item => item.id.videoId === best.id);
 
     return {
       videoId: best.id,
@@ -116,7 +121,7 @@ async function fetchViewsForTodaysMovies() {
 }
 
 // 毎週金曜 9:00 に公開当日の再生数を取得
-cron.schedule('48 13 * * *', () => {
+cron.schedule('55 13 * * *', () => {
   console.log('Running Friday cron: fetching release day views...');
   fetchViewsForTodaysMovies();
 }, { timezone: 'Asia/Tokyo' });
