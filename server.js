@@ -29,7 +29,7 @@ const DISTRIBUTOR_CHANNEL_MAP = {
   '20世紀スタジオ':     'UCkvOiP-XrHCDvAoGPC3lZrA',
   'スターウォーズ':     'UCGzKKabQ36Chhas5nermAGA',
   'ユニバーサルピクチャーズ': 'UC9llDCAObCbGpsaa66fClKw',
-  'イルミネーションピクチャーズ': 'UCi0I8qQOvOO0OZlBYovFYdg',
+  'イルミネーション':              'UCi0I8qQOvOO0OZlBYovFYdg',
   'ソニーピクチャーズ':  'UCx-l79NDhpI8GDyl_A_C1Ew',
   'パラマウントピクチャーズ': 'UCUTi1VedwlfXWEQa3EpN_0A',
   'ワーナーブラザース':  'UCSrwpEM8lBM4jR5YoKX3XOQ',
