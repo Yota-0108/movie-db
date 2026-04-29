@@ -82,6 +82,7 @@
         <th class="sortable" data-field="bonus_count">特典弾数</th>
         <th class="sortable" data-field="distributor">配給会社</th>
         <th>メモ</th>
+        <th>動画形式</th>
         <th></th>
       </tr>
     </thead>
@@ -113,6 +114,13 @@
         </label>
         <label>メモ
           <input type="text" id="editMemo" placeholder="未入力">
+        </label>
+        <label>動画形式
+          <select id="editVideoType">
+            <option value="">未入力</option>
+            <option value="short">short</option>
+            <option value="regular">regular</option>
+          </select>
         </label>
         <div class="modalButtons">
           <button type="submit">保存</button>

@@ -36,6 +36,7 @@ function renderMovies() {
       <td class="editable" data-field="bonus_count">${m.bonus_count ?? '<span class="null">-</span>'}</td>
       <td>${m.distributor ?? '<span class="null">-</span>'}</td>
       <td>${m.memo ?? '<span class="null">-</span>'}</td>
+      <td>${m.video_type ?? '<span class="null">-</span>'}</td>
       <td><button class="editBtn">編集</button></td>
     `;
     tbody.appendChild(tr);
@@ -59,6 +60,7 @@ function openEditModal(id) {
   document.getElementById('editBonusCount').value = movie.bonus_count ?? '';
   document.getElementById('editDistributor').value = movie.distributor ?? '';
   document.getElementById('editMemo').value = movie.memo ?? '';
+  document.getElementById('editVideoType').value = movie.video_type ?? '';
   document.getElementById('editTitle').textContent = movie.title;
   document.getElementById('editModal').style.display = 'flex';
 }
@@ -72,6 +74,7 @@ document.getElementById('editForm').addEventListener('submit', async (e) => {
     bonus_count: document.getElementById('editBonusCount').value || null,
     distributor: document.getElementById('editDistributor').value || null,
     memo: document.getElementById('editMemo').value || null,
+    video_type: document.getElementById('editVideoType').value || null,
   };
 
   const res = await fetch(`/api/movies/${id}`, {
