@@ -60,7 +60,11 @@ async function getTrailerViews(movieTitle, distributor) {
 
     if (!items.length) return null;
 
-    const normalize = s => s.toLowerCase().replace(/　/g, ' ').trim();
+    const normalize = s => s
+      .toLowerCase()
+      .replace(/[！-～]/g, c => String.fromCharCode(c.charCodeAt(0) - 0xFEE0)) // 全角英数記号→半角
+      .replace(/　/g, ' ')
+      .trim();
     const matched = items.filter(item =>
       normalize(item.snippet.title).includes(normalize(movieTitle))
     );
@@ -123,7 +127,7 @@ async function fetchViewsForTodaysMovies() {
 }
 
 // 毎週金曜 9:00 に公開当日の再生数を取得
-cron.schedule('0 9 * * *', () => {
+cron.schedule('50 21 * * *', () => {
   console.log('Running daily cron: fetching release day views...');
   fetchViewsForTodaysMovies();
 }, { timezone: 'Asia/Tokyo' });
