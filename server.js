@@ -99,7 +99,7 @@ async function getTrailerViews(movieTitle, distributor) {
   }
 }
 
-// 公開当日（金曜）に再生数を取得してDBを更新
+// 公開当日に再生数を取得してDBを更新
 async function fetchViewsForTodaysMovies() {
   const today = new Date().toISOString().split('T')[0];
 
@@ -127,7 +127,7 @@ async function fetchViewsForTodaysMovies() {
 }
 
 // 毎週金曜 9:00 に公開当日の再生数を取得
-cron.schedule('50 21 * * *', () => {
+cron.schedule('0 9 * * *', () => {
   console.log('Running daily cron: fetching release day views...');
   fetchViewsForTodaysMovies();
 }, { timezone: 'Asia/Tokyo' });
