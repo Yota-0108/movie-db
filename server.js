@@ -25,6 +25,7 @@ const DISTRIBUTOR_CHANNEL_MAP = {
   'Asmik Ace':          'UCBuAshczy8ouqLU_H381row',
   'TWIN ENGINE':        'UC5S8dDswLqbnm9fuZ8Z2ntQ',
   'ナカチカピクチャーズ': 'UCP8I83WIYaVrczhJndYErAg',
+  'トランスフォーマー':  'UCAmXsN8EZCLZxV6PQhhQdZQ',
   'ディズニースタジオ':  'UCCC2KYMK8Xq3Qs6WheLJJmw',
   '20世紀スタジオ':     'UCkvOiP-XrHCDvAoGPC3lZrA',
   'スターウォーズ':     'UCGzKKabQ36Chhas5nermAGA',
