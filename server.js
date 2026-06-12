@@ -75,7 +75,7 @@ async function getTrailerViews(movieTitle, distributor) {
     const ids = matched.map(item => item.id.videoId).join(',');
     const statsRes = await axios.get('https://www.googleapis.com/youtube/v3/videos', {
       params: {
-        part: 'statistics',
+        part: 'statistics,status',
         id: ids,
         key: process.env.YOUTUBE_API_KEY,
       },
@@ -83,8 +83,14 @@ async function getTrailerViews(movieTitle, distributor) {
 
     if (!statsRes.data.items?.length) return null;
 
+    // 公開動画のみに絞り込む
+    const publicItems = statsRes.data.items.filter(
+      item => item.status?.privacyStatus === 'public'
+    );
+    if (!publicItems.length) return null;
+
     // 再生数が最も多いものを選ぶ
-    const best = statsRes.data.items.reduce((a, b) => {
+    const best = publicItems.reduce((a, b) => {
       return parseInt(a.statistics?.viewCount || 0) >= parseInt(b.statistics?.viewCount || 0) ? a : b;
     });
     const matchedSnippet = matched.find(item => item.id.videoId === best.id);
