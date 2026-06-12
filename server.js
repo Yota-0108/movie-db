@@ -127,8 +127,8 @@ async function fetchViewsForTodaysMovies() {
   }
 }
 
-// 毎日 21:08(JST) に公開当日の再生数を取得
-cron.schedule('8 21 * * *', () => {
+// 毎日 9:00(JST) に公開当日の再生数を取得
+cron.schedule('0 9 * * *', () => {
   console.log('Running daily cron: fetching release day views...');
   fetchViewsForTodaysMovies();
 }, { timezone: 'Asia/Tokyo' });
