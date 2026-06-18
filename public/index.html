@@ -57,7 +57,7 @@
     </select>
     <input type="number" id="bonus_count" placeholder="特典の弾数">
     <select id="distributor">
-      <option value="">配給会社を選択</option>
+      <option value="">チャンネルを選択</option>
     </select>
     <input type="text" id="memo" placeholder="メモ">
     <button type="submit">登録</button>
@@ -65,7 +65,7 @@
 
   <h2>作品一覧 <button id="reloadBtn" type="button">更新</button></h2>
   <div id="filterBar">
-    <label>配給会社：
+    <label>チャンネル名：
       <select id="distributorFilter">
         <option value="">すべて</option>
       </select>
@@ -80,7 +80,7 @@
         <th class="sortable" data-field="youtube_views_release">予告再生数（公開当日）</th>
         <th>入場者特典</th>
         <th class="sortable" data-field="bonus_count">特典弾数</th>
-        <th class="sortable" data-field="distributor">配給会社</th>
+        <th class="sortable" data-field="distributor">チャンネル名</th>
         <th>メモ</th>
         <th>動画形式</th>
         <th></th>
@@ -107,7 +107,7 @@
         <label>特典弾数
           <input type="number" id="editBonusCount" placeholder="未入力">
         </label>
-        <label>配給会社
+        <label>チャンネル名
           <select id="editDistributor">
             <option value="">未選択</option>
           </select>
