@@ -34,6 +34,8 @@ const DISTRIBUTOR_CHANNEL_MAP = {
   'ソニーピクチャーズ':  'UCx-l79NDhpI8GDyl_A_C1Ew',
   'パラマウントピクチャーズ': 'UCUTi1VedwlfXWEQa3EpN_0A',
   'ワーナーブラザース':  'UCSrwpEM8lBM4jR5YoKX3XOQ',
+  'ヨーロッパ企画':     'UC2TbJKsHgrYCbLxKBI8fpXQ',
+  'ビターズ・エンド':   'UCoSEan3p30GgsBNJ6VNtbDA',
 };
 
 // YouTube予告動画を検索して再生数を取得
