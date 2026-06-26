@@ -36,6 +36,7 @@ const DISTRIBUTOR_CHANNEL_MAP = {
   'ワーナーブラザース':  'UCSrwpEM8lBM4jR5YoKX3XOQ',
   'ヨーロッパ企画':     'UC2TbJKsHgrYCbLxKBI8fpXQ',
   'ビターズ・エンド':   'UCoSEan3p30GgsBNJ6VNtbDA',
+  'ケロロチャンネル':   'UCPKVAsHJPUd8vslgQJMPvjg',
 };
 
 // YouTube予告動画を検索して再生数を取得
@@ -136,7 +137,7 @@ async function fetchViewsForTodaysMovies() {
 }
 
 // 毎日 9:00(JST) に公開当日の再生数を取得
-cron.schedule('0 9 * * *', () => {
+cron.schedule('20 13 * * *', () => {
   console.log('Running daily cron: fetching release day views...');
   fetchViewsForTodaysMovies();
 }, { timezone: 'Asia/Tokyo' });
