@@ -137,10 +137,16 @@ async function fetchViewsForTodaysMovies() {
 }
 
 // 毎日 9:00(JST) に公開当日の再生数を取得
-cron.schedule('20 13 * * *', () => {
+cron.schedule('20 22 * * *', () => {
   console.log('Running daily cron: fetching release day views...');
   fetchViewsForTodaysMovies();
 }, { timezone: 'Asia/Tokyo' });
+
+// 手動で今日の再生数を取得
+app.post('/api/fetch-views', async (req, res) => {
+  await fetchViewsForTodaysMovies();
+  res.json({ ok: true });
+});
 
 // 作品登録
 app.post('/api/movies', async (req, res) => {
