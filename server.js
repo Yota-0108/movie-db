@@ -111,7 +111,7 @@ async function getTrailerViews(movieTitle, distributor) {
 
 // 公開当日に再生数を取得してDBを更新
 async function fetchViewsForTodaysMovies() {
-  const today = new Date().toISOString().split('T')[0];
+  const today = new Intl.DateTimeFormat('sv-SE', { timeZone: 'Asia/Tokyo' }).format(new Date());
 
   const { data: movies, error } = await supabase
     .from('movies')
