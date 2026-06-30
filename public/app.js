@@ -2,6 +2,21 @@ let allMovies = [];
 let sortField = 'release_date';
 let sortDir = 'desc';
 
+const GENRES = [
+  'ドキュメンタリー', 'コメディ', 'アクション', 'ヒューマンドラマ', 'ラブロマンス',
+  'ホラー', 'サスペンス', 'SF', 'ファンタジー', '青春', '音楽', 'スポーツ', '歴史',
+];
+
+// ジャンルチェックボックスを初期化（一度だけ）
+(function initGenreCheckboxes() {
+  const group = document.getElementById('editGenresGroup');
+  GENRES.forEach(g => {
+    const label = document.createElement('label');
+    label.innerHTML = `<input type="checkbox" name="editGenre" value="${g}"> ${g}`;
+    group.appendChild(label);
+  });
+})();
+
 function updateDistributorFilter() {
   const select = document.getElementById('distributorFilter');
   const current = select.value;
@@ -61,6 +76,21 @@ function openEditModal(id) {
   document.getElementById('editDistributor').value = movie.distributor ?? '';
   document.getElementById('editMemo').value = movie.memo ?? '';
   document.getElementById('editVideoType').value = movie.video_type ?? '';
+
+  // origin ラジオ
+  document.querySelectorAll('input[name="editOrigin"]').forEach(r => {
+    r.checked = (r.value === (movie.origin ?? ''));
+  });
+  // format ラジオ
+  document.querySelectorAll('input[name="editFormat"]').forEach(r => {
+    r.checked = (r.value === (movie.format ?? ''));
+  });
+  // genres チェックボックス
+  const savedGenres = movie.genres ?? [];
+  document.querySelectorAll('input[name="editGenre"]').forEach(cb => {
+    cb.checked = savedGenres.includes(cb.value);
+  });
+
   document.getElementById('editTitle').textContent = movie.title;
   document.getElementById('editModal').style.display = 'flex';
 }
@@ -68,6 +98,10 @@ function openEditModal(id) {
 document.getElementById('editForm').addEventListener('submit', async (e) => {
   e.preventDefault();
   const id = document.getElementById('editId').value;
+  const originVal = document.querySelector('input[name="editOrigin"]:checked')?.value || null;
+  const formatVal = document.querySelector('input[name="editFormat"]:checked')?.value || null;
+  const genresVal = [...document.querySelectorAll('input[name="editGenre"]:checked')].map(cb => cb.value);
+
   const body = {
     theater_count: document.getElementById('editTheaterCount').value || null,
     has_bonus: document.getElementById('editHasBonus').value === 'true',
@@ -75,6 +109,9 @@ document.getElementById('editForm').addEventListener('submit', async (e) => {
     distributor: document.getElementById('editDistributor').value || null,
     memo: document.getElementById('editMemo').value || null,
     video_type: document.getElementById('editVideoType').value || null,
+    origin: originVal,
+    format: formatVal,
+    genres: genresVal,
   };
 
   const res = await fetch(`/api/movies/${id}`, {

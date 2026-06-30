@@ -41,6 +41,9 @@
     #editModalInner label { font-size: 0.85rem; display: flex; flex-direction: column; gap: 4px; }
     #editModalInner input, #editModalInner select { padding: 6px 10px; font-size: 0.9rem; }
     .modalButtons { display: flex; gap: 10px; }
+    .radioGroup, .checkboxGroup { display: flex; flex-wrap: wrap; gap: 8px; font-size: 0.85rem; }
+    .radioGroup label, .checkboxGroup label { flex-direction: row; align-items: center; gap: 4px; }
+    .fieldLabel { font-size: 0.85rem; margin-bottom: 2px; }
   </style>
 </head>
 <body>
@@ -122,6 +125,26 @@
             <option value="regular">regular</option>
           </select>
         </label>
+        <div>
+          <div class="fieldLabel">邦画 / 洋画</div>
+          <div class="radioGroup" id="editOriginGroup">
+            <label><input type="radio" name="editOrigin" value="邦画"> 邦画</label>
+            <label><input type="radio" name="editOrigin" value="洋画"> 洋画</label>
+            <label><input type="radio" name="editOrigin" value=""> 未選択</label>
+          </div>
+        </div>
+        <div>
+          <div class="fieldLabel">実写 / アニメ</div>
+          <div class="radioGroup" id="editFormatGroup">
+            <label><input type="radio" name="editFormat" value="実写"> 実写</label>
+            <label><input type="radio" name="editFormat" value="アニメ"> アニメ</label>
+            <label><input type="radio" name="editFormat" value=""> 未選択</label>
+          </div>
+        </div>
+        <div>
+          <div class="fieldLabel">ジャンル</div>
+          <div class="checkboxGroup" id="editGenresGroup"></div>
+        </div>
         <div class="modalButtons">
           <button type="submit">保存</button>
           <button type="button" id="cancelEdit">キャンセル</button>
