@@ -38,12 +38,14 @@ function renderMovies() {
   const filterVal = document.getElementById('distributorFilter').value;
   const originVal = document.getElementById('originFilter').value;
   const formatVal = document.getElementById('formatFilter').value;
+  const dateVal = document.getElementById('dateFilter').value;
   const selectedGenres = [...document.querySelectorAll('input[name="filterGenre"]:checked')].map(cb => cb.value);
 
   let movies = [...allMovies];
   if (filterVal) movies = movies.filter(m => m.distributor === filterVal);
   if (originVal) movies = movies.filter(m => m.origin === originVal);
   if (formatVal) movies = movies.filter(m => m.format === formatVal);
+  if (dateVal) movies = movies.filter(m => m.release_date === dateVal);
   if (selectedGenres.length) movies = movies.filter(m => selectedGenres.every(g => (m.genres ?? []).includes(g)));
 
   movies.sort((a, b) => {
@@ -160,6 +162,7 @@ async function loadMovies() {
 document.getElementById('distributorFilter').addEventListener('change', renderMovies);
 document.getElementById('originFilter').addEventListener('change', renderMovies);
 document.getElementById('formatFilter').addEventListener('change', renderMovies);
+document.getElementById('dateFilter').addEventListener('change', renderMovies);
 document.getElementById('reloadBtn').addEventListener('click', loadMovies);
 
 document.querySelectorAll('th.sortable').forEach(th => {
