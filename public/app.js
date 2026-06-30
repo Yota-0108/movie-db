@@ -7,13 +7,22 @@ const GENRES = [
   'ホラー', 'サスペンス', 'SF', 'ファンタジー', '青春', '音楽', 'スポーツ', '歴史',
 ];
 
-// ジャンルチェックボックスを初期化（一度だけ）
+// ジャンルチェックボックスを初期化（編集モーダル・フィルタバー）
 (function initGenreCheckboxes() {
-  const group = document.getElementById('editGenresGroup');
+  const editGroup = document.getElementById('editGenresGroup');
+  const filterGroup = document.getElementById('genreFilterGroup');
   GENRES.forEach(g => {
-    const label = document.createElement('label');
-    label.innerHTML = `<input type="checkbox" name="editGenre" value="${g}"> ${g}`;
-    group.appendChild(label);
+    const editLabel = document.createElement('label');
+    editLabel.innerHTML = `<input type="checkbox" name="editGenre" value="${g}"> ${g}`;
+    editGroup.appendChild(editLabel);
+
+    const filterLabel = document.createElement('label');
+    filterLabel.innerHTML = `<input type="checkbox" name="filterGenre" value="${g}"> ${g}`;
+    filterGroup.appendChild(filterLabel);
+  });
+
+  document.querySelectorAll('input[name="filterGenre"]').forEach(cb => {
+    cb.addEventListener('change', renderMovies);
   });
 })();
 
@@ -27,7 +36,15 @@ function updateDistributorFilter() {
 
 function renderMovies() {
   const filterVal = document.getElementById('distributorFilter').value;
-  let movies = filterVal ? allMovies.filter(m => m.distributor === filterVal) : [...allMovies];
+  const originVal = document.getElementById('originFilter').value;
+  const formatVal = document.getElementById('formatFilter').value;
+  const selectedGenres = [...document.querySelectorAll('input[name="filterGenre"]:checked')].map(cb => cb.value);
+
+  let movies = [...allMovies];
+  if (filterVal) movies = movies.filter(m => m.distributor === filterVal);
+  if (originVal) movies = movies.filter(m => m.origin === originVal);
+  if (formatVal) movies = movies.filter(m => m.format === formatVal);
+  if (selectedGenres.length) movies = movies.filter(m => selectedGenres.every(g => (m.genres ?? []).includes(g)));
 
   movies.sort((a, b) => {
     let va = a[sortField] ?? '';
@@ -141,6 +158,8 @@ async function loadMovies() {
 }
 
 document.getElementById('distributorFilter').addEventListener('change', renderMovies);
+document.getElementById('originFilter').addEventListener('change', renderMovies);
+document.getElementById('formatFilter').addEventListener('change', renderMovies);
 document.getElementById('reloadBtn').addEventListener('click', loadMovies);
 
 document.querySelectorAll('th.sortable').forEach(th => {

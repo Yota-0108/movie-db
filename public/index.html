@@ -17,7 +17,8 @@
     th.sortable:hover { background: #e8e8e8; }
     th.sort-asc::after { content: ' ▲'; font-size: 0.75rem; }
     th.sort-desc::after { content: ' ▼'; font-size: 0.75rem; }
-    #filterBar { margin-bottom: 12px; display: flex; align-items: center; gap: 10px; font-size: 0.9rem; }
+    #filterBar { margin-bottom: 12px; display: flex; align-items: flex-start; flex-wrap: wrap; gap: 10px; font-size: 0.9rem; }
+    #genreFilterGroup { display: flex; flex-wrap: wrap; gap: 6px; }
 
     /* モーダル */
     #editModal {
@@ -73,6 +74,24 @@
         <option value="">すべて</option>
       </select>
     </label>
+    <label>邦画 / 洋画：
+      <select id="originFilter">
+        <option value="">すべて</option>
+        <option value="邦画">邦画</option>
+        <option value="洋画">洋画</option>
+      </select>
+    </label>
+    <label>実写 / アニメ：
+      <select id="formatFilter">
+        <option value="">すべて</option>
+        <option value="実写">実写</option>
+        <option value="アニメ">アニメ</option>
+      </select>
+    </label>
+    <div>
+      <div>ジャンル：</div>
+      <div id="genreFilterGroup"></div>
+    </div>
   </div>
   <table id="movieTable">
     <thead>
