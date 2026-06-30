@@ -39,6 +39,7 @@ const DISTRIBUTOR_CHANNEL_MAP = {
   'ケロロチャンネル':   'UCPKVAsHJPUd8vslgQJMPvjg',
   '映画のアーク':      'UC9kPJYXlqGtgsmhgWKFKamg',
   'クロックワークス':  'UCGv6srWGRilc9YpTIjUmqHw',
+  'KDDI':             'UCozDimGLxL64U6aaUqi0Jag',
 };
 
 // YouTube予告動画を検索して再生数を取得
