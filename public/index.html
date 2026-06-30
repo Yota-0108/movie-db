@@ -4,29 +4,29 @@
   <meta charset="UTF-8">
   <title>Movie DB</title>
   <style>
-    html { background: #f7f3ec; }
-    body { font-family: sans-serif; max-width: 900px; margin: 0 auto; padding: 0 20px; background: #f7f3ec; }
-    #siteHeader { background: #f9d6e2; margin: 0 -20px 32px; padding: 20px 20px; }
-    h1 { font-size: 1.4rem; margin: 0; color: #5c2e2e; }
-    h2 { color: #5c2e2e; }
+    html { background: #e0f1f1; }
+    body { font-family: sans-serif; max-width: 900px; margin: 0 auto; padding: 0 20px; background: #e0f1f1; }
+    #siteHeader { background: #5188b1; margin: 0 -20px 32px; padding: 20px 20px; }
+    h1 { font-size: 1.4rem; margin: 0; color: #fff; }
+    h2 { color: #5188b1; }
     form { display: flex; flex-wrap: wrap; gap: 10px; margin-bottom: 30px; }
     input, select {
       padding: 6px 10px; font-size: 0.9rem;
       background: rgba(255,255,255,0.65);
-      border: 1px solid rgba(244,170,154,0.6);
+      border: 1px solid rgba(81,136,177,0.5);
       border-radius: 4px;
     }
     button {
       padding: 6px 16px; cursor: pointer;
-      background: #f4aa9a; border: none; border-radius: 4px; color: #5c2e2e;
+      background: #5188b1; border: none; border-radius: 4px; color: #fff;
     }
-    button:hover { background: #f09282; color: #fff; }
+    button:hover { background: #aed265; color: #3a4e1a; }
     table { width: 100%; border-collapse: collapse; font-size: 0.9rem; }
-    th, td { border: 1px solid rgba(244,170,154,0.45); padding: 8px 12px; text-align: left; }
-    th { background: #f9d6e2; color: #5c2e2e; }
+    th, td { border: 1px solid rgba(81,136,177,0.3); padding: 8px 12px; text-align: left; }
+    th { background: #5188b1; color: #fff; }
     .null { color: #bbb; }
     th.sortable { cursor: pointer; user-select: none; }
-    th.sortable:hover { background: #f4aa9a; }
+    th.sortable:hover { background: #aed265; color: #3a4e1a; }
     th.sort-asc::after { content: ' ▲'; font-size: 0.75rem; }
     th.sort-desc::after { content: ' ▼'; font-size: 0.75rem; }
     #filterBar { margin-bottom: 12px; display: flex; align-items: flex-start; flex-wrap: wrap; gap: 10px; font-size: 0.9rem; }
@@ -37,27 +37,27 @@
       display: none;
       position: fixed;
       inset: 0;
-      background: rgba(92,46,46,0.3);
+      background: rgba(81,136,177,0.35);
       justify-content: center;
       align-items: center;
     }
     #editModalInner {
-      background: #f7f3ec;
+      background: #e0f1f1;
       padding: 30px;
       border-radius: 8px;
-      border: 1px solid rgba(244,170,154,0.5);
+      border: 1px solid rgba(81,136,177,0.4);
       min-width: 300px;
       display: flex;
       flex-direction: column;
       gap: 12px;
     }
-    #editModalInner h3 { margin: 0; font-size: 1rem; color: #5c2e2e; }
+    #editModalInner h3 { margin: 0; font-size: 1rem; color: #5188b1; }
     #editModalInner label { font-size: 0.85rem; display: flex; flex-direction: column; gap: 4px; }
     #editModalInner input, #editModalInner select { padding: 6px 10px; font-size: 0.9rem; }
     .modalButtons { display: flex; gap: 10px; }
     .radioGroup, .checkboxGroup { display: flex; flex-wrap: wrap; gap: 8px; font-size: 0.85rem; }
     .radioGroup label, .checkboxGroup label { flex-direction: row; align-items: center; gap: 4px; }
-    .fieldLabel { font-size: 0.85rem; margin-bottom: 2px; color: #5c2e2e; }
+    .fieldLabel { font-size: 0.85rem; margin-bottom: 2px; color: #5188b1; }
   </style>
 </head>
 <body>
