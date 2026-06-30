@@ -37,6 +37,7 @@ const DISTRIBUTOR_CHANNEL_MAP = {
   'ヨーロッパ企画':     'UC2TbJKsHgrYCbLxKBI8fpXQ',
   'ビターズ・エンド':   'UCoSEan3p30GgsBNJ6VNtbDA',
   'ケロロチャンネル':   'UCPKVAsHJPUd8vslgQJMPvjg',
+  '映画のアーク':      'UC9kPJYXlqGtgsmhgWKFKamg',
 };
 
 // YouTube予告動画を検索して再生数を取得
