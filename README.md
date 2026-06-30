@@ -13,8 +13,9 @@
 - **作品登録** — タイトル・公開日・上映館数・特典情報・配給会社・メモを登録
 - **再生数の自動取得** — 毎朝 9:00（JST）に cron が起動し、公開当日の作品の YouTube 予告動画再生数を取得して DB に保存
 - **手動取得** — `/api/fetch-views` エンドポイントから任意のタイミングで再生数を取得可能
-- **一覧表示** — 全項目でのソート、配給会社によるフィルタリングに対応
-- **編集モーダル** — 登録済み作品の各種情報をモーダルから更新
+- **一覧表示** — 全項目でのソート対応
+- **フィルタリング** — チャンネル名・邦画/洋画・実写/アニメ・ジャンル（複数選択、AND絞り込み）で絞り込み可能
+- **編集モーダル** — 登録済み作品の各種情報をモーダルから更新。邦画/洋画・実写/アニメ・ジャンルの属性入力に対応
 
 ## 技術スタック
 
@@ -88,8 +89,20 @@ create table movies (
   memo            text,
   video_type      text,
   youtube_views_release bigint,
-  youtube_video_id      text
+  youtube_video_id      text,
+  origin          text,
+  format          text,
+  genres          text[] default '{}'
 );
+```
+
+既存テーブルへの追加は以下のマイグレーションを実行してください。
+
+```sql
+ALTER TABLE movies
+  ADD COLUMN origin text,
+  ADD COLUMN format text,
+  ADD COLUMN genres text[] DEFAULT '{}';
 ```
 
 ### 起動
