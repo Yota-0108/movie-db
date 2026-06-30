@@ -43,6 +43,7 @@ const DISTRIBUTOR_CHANNEL_MAP = {
   'Storm FILM':       'UCzDM-Rh69mT7I5vK3ipPb3A',
   'SDP':              'UCZkfXrnutZFtlTMFq4FbNWQ',
   'ウルトラマン公式': 'UC5PBnSG7C0WXp5gjd4bzKtw',
+  'シネマトゥデイ':   'UCRxDTCmIjgli-Xgh2KPE9dA',
 };
 
 // YouTube予告動画を検索して再生数を取得
