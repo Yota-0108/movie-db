@@ -42,6 +42,7 @@ const DISTRIBUTOR_CHANNEL_MAP = {
   'KDDI':             'UCozDimGLxL64U6aaUqi0Jag',
   'Storm FILM':       'UCzDM-Rh69mT7I5vK3ipPb3A',
   'SDP':              'UCZkfXrnutZFtlTMFq4FbNWQ',
+  'ウルトラマン公式': 'UC5PBnSG7C0WXp5gjd4bzKtw',
 };
 
 // YouTube予告動画を検索して再生数を取得
