@@ -15,6 +15,7 @@ const DISTRIBUTOR_CHANNEL_MAP = {
   '東宝':               'UCTDMT3aL30noTVFgNPA9XtQ',
   '東映':               'UCKtn-oZON38D0v7bLopdqDA',
   '松竹':               'UCulneJtjMARpEHhWQTlGa6w',
+  'SHOCHIKU anime':     'UC6VPE3kztGEtFVcJI0oIiUg',
   'KADOKAWA':           'UCHjj-qlJhYWDacFwnaewV6Q',
   'KADOKAWA Anime':     'UCY5fcqgSrQItPAX_Z5Frmwg',
   'avex':               'UCKlXiCjg_VI0eZ9kKBeNJgw',
@@ -44,6 +45,7 @@ const DISTRIBUTOR_CHANNEL_MAP = {
   'SDP':              'UCZkfXrnutZFtlTMFq4FbNWQ',
   'ウルトラマン公式': 'UC5PBnSG7C0WXp5gjd4bzKtw',
   'シネマトゥデイ':   'UCRxDTCmIjgli-Xgh2KPE9dA',
+  'K2Pictures':       'UCXjiG9HYmR5aUumvyDHmCbQ',
 };
 
 // YouTube予告動画を検索して再生数を取得
