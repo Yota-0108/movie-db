@@ -46,6 +46,7 @@ const DISTRIBUTOR_CHANNEL_MAP = {
   'ウルトラマン公式': 'UC5PBnSG7C0WXp5gjd4bzKtw',
   'シネマトゥデイ':   'UCRxDTCmIjgli-Xgh2KPE9dA',
   'K2Pictures':       'UCXjiG9HYmR5aUumvyDHmCbQ',
+  'カルチュアルライフ': 'UCJ2kUthNvNReu9xKTMR00ow',
 };
 
 // YouTube予告動画を検索して再生数を取得
